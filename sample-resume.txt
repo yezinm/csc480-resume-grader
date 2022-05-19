@@ -1,0 +1,52 @@
+REGGIE GREEN
+reggiegreen@calpoly.edu | 925.784.3333 | linkedin.com/in/reggiegreen
+SKILLS SUMMARY
+Proficient in Java, Python, C++, MySQL, C, and Javascript
+Familiar with quality assurance practice and testing including Mocking
+Background in robotics/embedded work
+Fluent in Spanish and Chinese
+
+EDUCATION
+Bachelor of Science Degree in Computer Science							        June 20xx
+Minor in Psychology
+GPA: 3.8
+
+RELEVANT COURSEWORK
+Applied Parallel Computing, Databases, Artificial Intelligence, Design and Analysis of Algorithms, Security, Operating Systems
+
+WORK EXPERIENCE
+Software Engineer Intern, Google									   Summer 20xx
+Android development on Google Assistant with Android Studio
+Designed and implemented new service with Java, C++, Javascript, CSS, HTML, protocol buffers, and RPCs
+Implemented firebase dynamic linking and URL resolution
+
+Engineering Practicum Intern, Google							     		   Summer 20xx
+Developed tool in C++ and Javascript to expose relevant logging data to ads development team
+Integrated 2 existing internal tools using Python
+
+WLAN Systems Engineer Intern, Broadcom								   Summer 20xx
+Developed embedded graphics display library and UI for streaming audio devices
+Generated power management, state of charge, and battery conditioning software and associated API’s
+Created various API’s for WICED software development kit related to status and system state
+Enhanced I2C libraries for specialized hardware support working with ASIC team
+Utilized modern software development tools including: GIT, Gerrit, JIRA, Jenkins, and Confluence
+
+Software Tester, Tapestry Solutions (a Boeing Subsidiary)				      November 20xx – June 20xx
+Wrote and executed Test Cases for company software, discovered and documented steps to produce bugs
+Collaborated with Tapestry Solutions and Software Quality Assurance team at Miro Technologies
+
+LEADERSHIP & CAMPUS INVOLVEMENT
+Vice President, White Hat Club								          September 20xx – Present
+Present on topics such as social engineering, SQL injections, and codes and ciphers
+Coordinate club and interclub activities and promote club membership
+Awarded 3rd Place Team at the 20xx iFixit Security Triathlon 
+
+Vice President, Association of Computing Machinery Cal Poly SLO Chapter		          September 20xx – Present
+Introduced students to various aspects of computing through workshops and industry events
+
+PERSONAL PROJECT
+Checkers Game | Python									   May 20xx –June 20xx
+Teamed with 2 students to create a checkers game; Coded entirely in Python with networking and a database backend
+Players interact through GUI’s on their respective machines
+Leaderboard generated with MMR rankings is displayed at the end of each game
+Players have the option to review each move made in the game
