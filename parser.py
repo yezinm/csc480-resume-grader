@@ -1,21 +1,61 @@
 import stanza
+import sys
+from termcolor import colored, cprint
+import pyfiglet
+from pyfiglet import Figlet
+
+#print a clean output to the terminal  
+print_red = lambda x: cprint(x, 'red')
+print_green = lambda x: cprint(x, 'green')
+print_blue_bold_underline = lambda x: cprint(x, 'blue', attrs = ['bold', 'underline'])
+print_blue = lambda x: cprint(x, 'blue')
+print_magenta_bold = lambda x: cprint(x, 'magenta', attrs = ['bold'])
+print_magenta = lambda x: cprint(x, 'magenta')
+
+print_blue_bold_underline("What career would you like to pursue?")
+print_blue("- Full Stack Engineer")
+print_blue("- Front End Engineer")
+print_blue("- Back End Engineer")
+print_blue("- Software QA Engineer")
+print_blue("- DevOps Engineer")
+print_blue("- Embedded Systems Software Engineer")
+print_blue("- Data Engineer")
+print_blue("- Mobile App Developer")
+print_blue("- Cloud Engineer")
+
+# Command Line arguments
+scriptName = sys.argv[0]
+resumeName = sys.argv[1]
+#positionName = sys.argv[2]
+positionName = input("Enter a position: ")
+
+def commandLineArgs(argv, position_name):  
+    """
+    To Run the program:
+
+    In the terminal, 
+    
+    # Command Line Arguments
+    # argv[0]     argv[1]               argv[2]
+    # file name   Resume Name           Position Name
+    # test.py     Example_Resume.pdf    "Software Engineering"
+
+    """
+    script_name = sys.argv[0]
+    resume_name = sys.argv[1]
+    position_name = sys.argv[2]
+
+    print(f"Name of the script : {script_name}")
+    print(f"Resume Name : {resume_name}")
+    print(f"Position Name : {position_name}")
 
 nlp = stanza.Pipeline(lang='en', processors='tokenize', tokenize_no_ssplit=True)
-languages = [
-    'java',
-    'go',
-    'python',
-    'c++',
-    'mysql',
-    'c',
-    'javascript',
-    'react',
-    'angular',
-    'vue',
-    'django',
-    'flask',
-    'node'
-]
+languages = ['java', 'go', 'python', 'c++', 'mysql', 'c', 'javascript', 'react', 'angular', 'vue', 'django', 'flask', 'node', 'html', 
+'ruby', 'php', 'perl', 'scala', 'golang', 'c#', 'css', 'swift', 'jenkins', 'groovy', 'jquery', 'ux and ui frameworks', 'c#',
+'node-js', 'smashtest', 'devops', 'kubernetes', 'docker', 'apache', 'mesos', 'hashicorp', 'sql', 'powershell', 'micropython', 
+'arduino', 'rust', 'verilog', 'r', 'julia', 'matlab', 'sas', 'html5', 'xamarin', 'flutter', 'react', 'native cloud', 'asp.net',
+'angularjs', 'angularjs']
+
 userLangs = []
 userGPA = 0
 userCourses = []
@@ -69,7 +109,7 @@ def getWorkExperience(sentences, i):
             
 def parseResume():
     text = "" 
-    with open('sample-resume.txt') as f:
+    with open(resumeName) as f:
         lines = f.readlines()
     doc = nlp(lines)
     for i, sentence in enumerate(doc.sentences):
@@ -87,13 +127,215 @@ def parseResume():
             getWorkExperience(doc.sentences, i)
         text = "" 
 
-def main():
-    parseResume()
-    print("Languages: ", userLangs)
-    print("GPA: ", userGPA)
-    print("Courses: ", userCourses)
-    print("Work experience: ", userExperiences)
+
+missingSkills = []
+def getSkillsScore():
+    numOfSkillsThere = 0
+    isInList = False
+    skillsScore = 0
+
     
+    if(positionName.replace(" ", "").lower() == "fullstackengineer"):
+        neededSkills = ["css", "javascript", "html", "java", "c", "c++", "ruby", "perl", "python", "scala", "react", "jenkins"]
+    elif(positionName.replace(" ", "").lower() == "frontendengineer"):
+        neededSkills = ["css", "javascript", "html", "react", "angular", "vue", "swift", "jquery"]
+    elif(positionName.replace(" ", "").lower() == "backendengineer"):
+        neededSkills = ["java", "c", "c++", "ruby", "perl", "pythom", "scala", "go", "javascript", "php", "golang", "c#"]
+    elif(positionName.replace(" ", "").lower() == "softwareqaengineer"):
+        neededSkills = ["c", "java", "groovy", "python", "perl", "ruby", "nodejs", "php",  "smashtest"]
+    elif(positionName.replace(" ", "").lower() == "devopsengineer"):
+        neededSkills = ["kubernetes", "docker", "apachemesos", "jenkins", "hashicorp", "stack"]
+    elif(positionName.replace(" ", "").lower() == "embeddedsystemssoftwareengineer"):
+        neededSkills = ["c", "c++", "python", "micropython", "java", "arduino", "rust", "verilog", "c#"]
+    elif(positionName.replace(" ", "").lower() == "dataengineer"):
+        neededSkills = ["sql", "r", "python", "javascript", "scala", "julia", "java", "c", "c++", "matlab", "sas"]
+    elif(positionName.replace(" ", "").lower() == "mobileappdeveloper"):
+        neededSkills = ["c#" "html5", "java", "python", "c", "c++", "java", "javascript", "xamarin", "flutter", "react", "reactnative"]
+    elif(positionName.replace(" ", "").lower() == "cloudengineer"):
+        neededSkills = ["java", "c++", "php", "asp.net", "python", "golang", "ruby", "angularjs"]
+    else:
+        raise("Enter a valid position name!")
+    
+    #compare neededSkills with users skills (userLangs)
+    for skill in neededSkills:
+        for lang in userLangs:
+            if skill == lang:
+                numOfSkillsThere +=1
+                isInList = True
+        if(isInList == False):
+            missingSkills.append(skill)
+        isInList = False
+
+    #Calculate score
+    if(numOfSkillsThere >= 5):
+        skillsScore = 15
+    elif(numOfSkillsThere == 4):
+        skillsScore = 12
+    elif(numOfSkillsThere == 3):
+        skillsScore = 9
+    elif(numOfSkillsThere == 2):
+        skillsScore = 6
+    elif(numOfSkillsThere == 1):
+        skillsScore = 3
+    else:
+        skillsScore = 0
+
+    return skillsScore
+
+
+def getGPAScore():
+    GPAScore = 0
+    if(userGPA >= 3.5):
+        GPAScore = 10
+    elif(userGPA >= 3.3):
+        GPAScore = 8
+    elif(userGPA >= 3):
+        GPAScore = 6
+    elif(userGPA >= 2.5):
+        GPAScore = 4
+    elif(userGPA >= 2):
+        GPAScore = 2
+    else:
+        GPAScore = 0
+
+    return GPAScore
+
+
+"""
+COURSEWORK:
+
+
+
+"""
+
+def getExperienceScore():
+    experienceScore = 0
+    numOfValidInternships = 0
+    topCompanies = ["facebook", "google", "amazon", "netflix", "microsoft", "uber", "lyft", "airbnb", "robinhood", "linkedin", "stripe", "twitter", "box", "roblox", "instacart", "bytedance", "pinterest", "doordash", "spacex", "coinbase", "discord"]
+    fake_user_companies = ["google", "asfour crystal"]
+
+    #check if he worked for a top company (score = 10)
+    for userCompany in fake_user_companies:
+        # if userCompany in topCompanies, (replace with line below)
+        for topCompany in topCompanies:
+            if userCompany == topCompany:
+                experienceScore = 20
+                return experienceScore
+
+    # count the number of valid internships
+    for experience in userExperiences:
+        fullExperince = experience.split()
+        for word in fullExperince:
+            if word == "software" or word == "engineer" or word == "engineering":
+                numOfValidInternships += 1
+    
+    # calculate experince score
+    if numOfValidInternships >= 3:
+        experienceScore = 18
+    elif numOfValidInternships == 2:
+        experienceScore = 16
+    elif numOfValidInternships == 1:
+        experienceScore = 12
+    else:
+        experienceScore = 0
+
+    return experienceScore
+  
+
+def getOverallScore():
+    finalSkillsScore = getSkillsScore() #skills are worth 15 points
+    finalGPAScore = getGPAScore()   #gpa is worth only 10 points
+    finalExperienceScore = getExperienceScore() # experience is worth 20 points
+    overallScore = ((finalSkillsScore + finalGPAScore + finalExperienceScore) / 45) * 100
+    return overallScore
+
+def getExperienceRecommendations():
+    if getExperienceScore() == 20:
+        print("You worked at a top company! Your work experience is great!")
+    elif getExperienceScore() == 18:
+        print("You have a great amount of solid internships! The only recommendation we have is to try to get an internship at a top company.")
+    elif getExperienceScore() == 16:
+        print("You have a good amount of solid internships! We recommend getting one more solid internship, especially at a top company.")
+    elif getExperienceScore() == 12:
+        print("You only have one solid internship, we recommend getting one or two more internships, especially at a top compnay!")
+    elif getExperienceScore() == 0:
+        print("You have no solid internships! We recommend improving your experience by getting at least two/three solid internships, especially if you can get one at a top company.")
+
+def getSkillsRecommendations():
+    print("The skills you should add to your resume are", end = ' ')
+    for i in range(len(missingSkills)//2):
+        if missingSkills[i] != missingSkills[(len(missingSkills)//2) - 1]:
+            print(missingSkills[i], end = ', ')
+        else:
+            print("and", missingSkills[i])
+            
+def getGPARecommendations():
+    if getGPAScore() == 10:
+        print("Your GPA is perfect!")
+    elif getGPAScore() == 8:
+        print("Your GPA is pretty good, we recommend improving it to 3.5 or higher")
+    elif getGPAScore() == 6:
+        print("Your GPA needs some improvement, we recommend improving it to 3.5 or higher")
+    elif getGPAScore() == 4:
+        print("Your GPA is very weak, we recommend improving it to 3.5 or higher")
+    else:
+        print("Your GPA is terrible, you should increase it in any way, we recommend improving it to 3.5 or higher") 
+
+def giveOverallFeedback():
+    if getOverallScore() == 100:
+        print("You have a perfect resume for the position you are applying for! You meet all of the requirements for this job, there's no need to improve anything to your resume. \nWe very strongly recommend that you continue persuing this career.")
+    elif getOverallScore() >= 90:
+        print("You have an amazing resume for the position you are applying for! You meet almost all of the requirements for this job. \nWith very minimal additions to your resume, you'll have a perfect resume and you'll be set for the job. We strongly recommend that you continue persuing this career.")
+    elif getOverallScore() >= 80:
+        print("You have a great resume for the position you are applying for! You meet most of the requirements for this job. \nWith a few additions to your resume, you'll have a perfect resume and you'll be set for the job. We recommend that you continue persuing this career.")
+    elif getOverallScore() >= 70:
+        print("You have a decent resume for the position you are applying for. You meet a decent amount of the requirements for this job. \nWith some additions to your resume, you'll have a perfect resume and you'll be set for the job. We suggest that you continue persuing this career.")
+    elif getOverallScore() >= 60:
+        print("You have a satisfactory level resume for the position you are applying for. You meet a few amount of the requirements for this job. \nWith a lot of additions to your resume, you'll have a perfect resume and you'll be set for the job. You could still continue persuing this career.")
+    elif getOverallScore() >= 50:
+        print("You have a poor resume for the position you are applying for. You meet very few of the requirements for this job. \nYou need to make many additions to your resume in order to have a strong resume for this postion. You could still continue persuing this career, but we recommend looking for another positon in the same field.")
+    elif getOverallScore() >= 30:
+        print("You have a very poor resume for the position you are applying for. You meet a very low amount of the requirements for this job. \nYou need to make so many additions to your resume in order to have an acceptable resume for this postion. We recommend looking for another positon, maybe in the same field.")
+    else:
+        print("You have an extremely poor resume for the position you are applying for. You meet almost none of requirements for this job. \nYou would have to completely update your resume in order to have a acceptable resume for this postion. We recommend that you persue a different career.")
+    
+#def giveMoreAdvice():
+    #if worked at a top company: emphasize that
+    #if they have over three expreinces, emphazise that
+    #if they dont have good exprience, talk about your projects
+    #if they have a 4.0 emphasize that
+    #if you have a low gpa, take off the resume
+    #for each roll, specify what important skill to emphasize
+
+def displayOutput():
+    #print_blue(pyfiglet.figlet_format("\n**************************** RESUME GRADE REPORT ****************************", font = 'digital'))
+    print_blue("\n**************************** RESUME GRADE REPORT ****************************")
+    print("\nYour overall score for your resume is: ", getOverallScore(), "%")
+    print("\n")
+    giveOverallFeedback()
+    print_red("\nHere is a breakdown of your scores for each section of your resume:")
+    print("\nExperience: ", getExperienceScore(), "/20")
+    print("\nSkills: ", getSkillsScore(), "/15")
+    print("\nGPA: ", getGPAScore(), "/10")
+    print_green("\nRECOMMENDATIONS:")
+    print("\nExperience", end = ': ')
+    getExperienceRecommendations()
+    print("\nSkills", end = ': ')
+    getSkillsRecommendations()
+    print("\nGPA", end = ': ')
+    getGPARecommendations()
+    print("\n")
+
+    
+
+def main():
+    #printPositions()
+    #commandLineArgs(sys.argv, positionName)
+    parseResume()
+    displayOutput()
+
+
 
 if __name__ == "__main__":
     main()
+    
