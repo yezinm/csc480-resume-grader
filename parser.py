@@ -55,11 +55,13 @@ languages = ['java', 'go', 'python', 'c++', 'mysql', 'c', 'javascript', 'react',
 'node-js', 'smashtest', 'devops', 'kubernetes', 'docker', 'apache', 'mesos', 'hashicorp', 'sql', 'powershell', 'micropython', 
 'arduino', 'rust', 'verilog', 'r', 'julia', 'matlab', 'sas', 'html5', 'xamarin', 'flutter', 'react', 'native cloud', 'asp.net',
 'angularjs', 'angularjs']
+topCompanies = ["facebook", "google", "amazon", "netflix", "microsoft", "uber", "lyft", "airbnb", "robinhood", "linkedin", "stripe", "twitter", "box", "roblox", "instacart", "bytedance", "pinterest", "doordash", "spacex", "coinbase", "discord"]
 
 userLangs = []
 userGPA = 0
 userCourses = []
 userExperiences = []
+userCompanies = []
 
 def getLangs(sentences, i):
     text = ""
@@ -104,6 +106,10 @@ def getWorkExperience(sentences, i):
             st.remove(',')
             text = " ".join(st)
             userExperiences.append(text)
+            t = text.split()
+            for w in t:
+                if w in topCompanies:
+                    userCompanies.append(w)
         i += 1
         text = ""
             
