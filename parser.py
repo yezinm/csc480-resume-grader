@@ -70,6 +70,13 @@ userCourses = []
 userExperiences = []
 userCompanies = []
 
+topCompanies = ["facebook", "google", "amazon", "netflix", "microsoft", "uber", "lyft", "airbnb", "robinhood", "linkedin", "stripe", "twitter", "box", "roblox", "instacart", "bytedance", "pinterest", "doordash", "spacex", "coinbase", "discord"]
+
+topCompanyBool = False
+experienceGoodBool = False
+experienceBadBool = False
+
+
 def getLangs(sentences, i):
     text = ""
     while(text.lower() != 'education'):
@@ -141,12 +148,13 @@ def parseResume():
         text = "" 
 
 
-missingSkills = []
+#missingSkills = []
 def getSkillsScore():
+    global missingSkills
+    missingSkills = []
     numOfSkillsThere = 0
     isInList = False
     skillsScore = 0
-
     
     if(positionName.replace(" ", "").lower() == "fullstackengineer"):
         neededSkills = ["css", "javascript", "html", "java", "c", "c++", "ruby", "perl", "python", "scala", "react", "jenkins"]
@@ -163,21 +171,31 @@ def getSkillsScore():
     elif(positionName.replace(" ", "").lower() == "dataengineer"):
         neededSkills = ["sql", "r", "python", "javascript", "scala", "julia", "java", "c", "c++", "matlab", "sas"]
     elif(positionName.replace(" ", "").lower() == "mobileappdeveloper"):
-        neededSkills = ["c#" "html5", "java", "python", "c", "c++", "java", "javascript", "xamarin", "flutter", "react", "reactnative"]
+        neededSkills = ["c#", "html5", "java", "python", "c", "c++", "java", "javascript", "xamarin", "flutter", "react", "reactnative"]
     elif(positionName.replace(" ", "").lower() == "cloudengineer"):
         neededSkills = ["java", "c++", "php", "asp.net", "python", "golang", "ruby", "angularjs"]
     else:
         raise("Enter a valid position name!")
     
+    #print("needed skillsss", neededSkills)
+    #print("userlangs", userLangs)
+    #print("MISSING ", missingSkills)
     #compare neededSkills with users skills (userLangs)
+    # for skill in neededSkills:
+    #     for lang in userLangs:
+    #         if skill == lang:
+    #             numOfSkillsThere +=1
+    #             isInList = True
+    #     if(isInList == False):
+    #         missingSkills.append(skill)
+    #     isInList = False
     for skill in neededSkills:
-        for lang in userLangs:
-            if skill == lang:
-                numOfSkillsThere +=1
-                isInList = True
-        if(isInList == False):
+        if skill not in userLangs:
             missingSkills.append(skill)
-        isInList = False
+        else:
+            numOfSkillsThere += 1
+    
+    #print("missing skills", missingSkills)
 
     #Calculate score
     if(numOfSkillsThere >= 5):
@@ -214,30 +232,23 @@ def getGPAScore():
     return GPAScore
 
 
-"""
-COURSEWORK:
-
-
-
-"""
-topCompanyBool = False
-experienceGoodBool = False
-experienceBadBool = False
-
 def getExperienceScore():
     experienceScore = 0
     numOfValidInternships = 0
-    topCompanies = ["facebook", "google", "amazon", "netflix", "microsoft", "uber", "lyft", "airbnb", "robinhood", "linkedin", "stripe", "twitter", "box", "roblox", "instacart", "bytedance", "pinterest", "doordash", "spacex", "coinbase", "discord"]
-    fake_user_companies = ["google", "asfour crystal"]
+    #fake_user_companies = ["google", "asfour crystal"]
 
     #check if he worked for a top company (score = 10)
-    for userCompany in fake_user_companies:
+    '''for userCompany in fake_user_companies:
         # if userCompany in topCompanies, (replace with line below)
         for topCompany in topCompanies:
             if userCompany == topCompany:
                 experienceScore = 20
                 topCompanyBool = 1
-                return experienceScore, topCompanyBool
+                return experienceScore, topCompanyBool'''
+    if len(userCompanies) > 0:
+        experienceScore = 20
+        topCompanyBool = 1
+        return experienceScore, topCompanyBool
 
     # count the number of valid internships
     for experience in userExperiences:
@@ -283,8 +294,8 @@ def getExperienceRecommendations():
 
 def getSkillsRecommendations():
     print("The skills you should add to your resume are", end = ' ')
-    for i in range(len(missingSkills)//2):
-        if missingSkills[i] != missingSkills[(len(missingSkills)//2) - 1]:
+    for i in range(len(missingSkills)):
+        if missingSkills[i] != missingSkills[len(missingSkills) - 1]:
             print(missingSkills[i], end = ', ')
         else:
             print("and", missingSkills[i])
@@ -303,17 +314,17 @@ def getGPARecommendations():
 
 def giveOverallFeedback():
     if getOverallScore() == 100:
-        print_magenta("You have a perfect resume for the position you are applying for! You meet all of the requirements for this job, there's no need to improve anything to your resume. \nWe very strongly recommend that you continue persuing this career.")
+        print_magenta("You have a perfect resume for the position you are applying for! You meet all of the requirements for this job, there's no need to improve anything to your resume. \nWe very strongly recommend that you continue pursuing this career.")
     elif getOverallScore() >= 90:
-        print_magenta("You have an amazing resume for the position you are applying for! You meet almost all of the requirements for this job. \nWith very minimal additions to your resume, you'll have a perfect resume and you'll be set for the job. \nWe strongly recommend that you continue persuing this career.")
+        print_magenta("You have an amazing resume for the position you are applying for! You meet almost all of the requirements for this job. \nWith very minimal additions to your resume, you'll have a perfect resume and you'll be set for the job. \nWe strongly recommend that you continue pursuing this career.")
     elif getOverallScore() >= 80:
-        print_magenta("You have a great resume for the position you are applying for! You meet most of the requirements for this job. \nWith a few additions to your resume, you'll have a perfect resume and you'll be set for the job. \nWe recommend that you continue persuing this career.")
+        print_magenta("You have a great resume for the position you are applying for! You meet most of the requirements for this job. \nWith a few additions to your resume, you'll have a perfect resume and you'll be set for the job. \nWe recommend that you continue pursuing this career.")
     elif getOverallScore() >= 70:
-        print_magenta("You have a decent resume for the position you are applying for. You meet a decent amount of the requirements for this job. \nWith some additions to your resume, you'll have a perfect resume and you'll be set for the job. \nWe suggest that you continue persuing this career.")
+        print_magenta("You have a decent resume for the position you are applying for. You meet a decent amount of the requirements for this job. \nWith some additions to your resume, you'll have a perfect resume and you'll be set for the job. \nWe suggest that you continue pursuing this career.")
     elif getOverallScore() >= 60:
-        print_magenta("You have a satisfactory level resume for the position you are applying for. You meet a few amount of the requirements for this job. \nWith a lot of additions to your resume, you'll have a perfect resume and you'll be set for the job. \nYou could still continue persuing this career.")
+        print_magenta("You have a satisfactory level resume for the position you are applying for. You meet a few amount of the requirements for this job. \nWith a lot of additions to your resume, you'll have a perfect resume and you'll be set for the job. \nYou could still continue pursuing this career.")
     elif getOverallScore() >= 50:
-        print_magenta("You have a poor resume for the position you are applying for. You meet very few of the requirements for this job. \nYou need to make many additions to your resume in order to have a strong resume for this postion. \nYou could still continue persuing this career, but we recommend looking for another positon in the same field.")
+        print_magenta("You have a poor resume for the position you are applying for. You meet very few of the requirements for this job. \nYou need to make many additions to your resume in order to have a strong resume for this postion. \nYou could still continue pursuing this career, but we recommend looking for another positon in the same field.")
     elif getOverallScore() >= 30:
         print_magenta("You have a very poor resume for the position you are applying for. You meet a very low amount of the requirements for this job. \nYou need to make so many additions to your resume in order to have an acceptable resume for this postion. \nWe recommend looking for another positon, maybe in the same field.")
     else:
@@ -326,6 +337,7 @@ def giveOverallFeedback():
     #if they have a 4.0 emphasize that
     #if you have a low gpa, take off the resume
     #for each roll, specify what important skill to emphasize
+
 
 def additionalAdvice():
     #print(topCompanyBool)
@@ -371,7 +383,6 @@ def main():
     print("\n")
     print_cyan_bold("Extra Recommendations:\n")
     additionalAdvice()
-
 
 
 if __name__ == "__main__":
