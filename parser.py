@@ -68,8 +68,7 @@ userLangs = []
 userGPA = 0
 userCourses = []
 userExperiences = []
-
-
+userCompanies = []
 
 def getLangs(sentences, i):
     text = ""
@@ -114,6 +113,10 @@ def getWorkExperience(sentences, i):
             st.remove(',')
             text = " ".join(st)
             userExperiences.append(text)
+            t = text.split()
+            for w in t:
+                if w in topCompanies:
+                    userCompanies.append(w)
         i += 1
         text = ""
             
